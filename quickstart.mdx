@@ -1,86 +1,775 @@
 ---
 title: 'Quickstart'
-description: 'Start building awesome documentation in under 5 minutes'
+description: 'Get started with GROQA API in minutes'
 ---
 
-## Setup your development
+## 1. Installation
 
-Learn how to update your docs locally and deploy them to the public.
+<CodeGroup>
 
-### Edit and preview
+    ```bash pip
+    pip install --upgrade groqa
+    ```
 
-<AccordionGroup>
-  <Accordion icon="github" title="Clone your docs locally">
-    During the onboarding process, we created a repository on your Github with
-    your docs content. You can find this repository on our
-    [dashboard](https://dashboard.mintlify.com). To clone the repository
-    locally, follow these
-    [instructions](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
-    in your terminal.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Preview changes">
-    Previewing helps you make sure your changes look as intended. We built a
-    command line interface to render these changes locally. 1. Install the
-    [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the
-    documentation changes locally with this command: ``` npm i -g mintlify ```
-    2. Run the following command at the root of your documentation (where
-    `mint.json` is): ``` mintlify dev ```
-  </Accordion>
-</AccordionGroup>
+    ```bash npm
+    coming soon
+    ```
 
-### Deploy your changes
+</CodeGroup>
 
-<AccordionGroup>
 
-<Accordion icon="message-bot" title="Install our Github app">
-  Our Github app automatically deploys your changes to your docs site, so you
-  don't need to manage deployments yourself. You can find the link to install on
-  your [dashboard](https://dashboard.mintlify.com). Once the bot has been
-  successfully installed, there should be a check mark next to the commit hash
-  of the repo.
-</Accordion>
-<Accordion icon="rocket" title="Push your changes">
-  [Commit and push your changes to
-  Git](https://docs.github.com/en/get-started/using-git/pushing-commits-to-a-remote-repository#about-git-push)
-  for your changes to update in your docs site. If you push and don't see that
-  the Github app successfully deployed your changes, you can also manually
-  update your docs through our [dashboard](https://dashboard.mintlify.com).
-</Accordion>
 
-</AccordionGroup>
+## 2. API Key Setup
 
-## Update your docs
+1. Sign in to [GROQA API Platform](https://api.groqa.com)
+2. Copy your API Key from the Api Keys Page
+![title](/images/apikeys.png)
 
-Add content directly in your files with MDX syntax and React components. You can use any of our components, or even build your own.
 
-<CardGroup>
 
-<Card title="Style Your Docs" icon="paintbrush" href="/settings/global">
-  Add flair to your docs with personalized branding.
-</Card>
+## 3. Instantiate Client
+For synchronous usage:
+<CodeGroup>
 
-<Card
-  title="Add API Endpoints"
-  icon="square-code"
-  href="/api-playground/configuration"
->
-  Implement your OpenAPI spec and enable API user interaction.
-</Card>
+    ```bash python
+    from groqa import GroqaSync
 
-<Card
-  title="Integrate Analytics"
-  icon="chart-mixed"
-  href="/analytics/supported-integrations"
->
-  Draw insights from user interactions with your documentation.
-</Card>
+    api_key = "your_api_key"
+    client_sync = GroqaSync(api_key)
+    ```
 
-<Card
-  title="Host on a Custom Domain"
-  icon="browser"
-  href="/settings/custom-domain/subdomain"
->
-  Keep your docs on your own website's subdomain.
-</Card>
+    ```bash javascript
+    coming soon
+    ```
 
-</CardGroup>
+</CodeGroup>
+
+For asynchronous usage:
+
+<CodeGroup>
+
+    ```bash python
+    from GROQA import GROQAAsync
+
+    api_key = "your_api_key"
+    client_async = GROQAAsync(api_key)
+    ```
+
+    ```bash javascript
+    coming soon
+    ```
+
+</CodeGroup>
+
+## 4. Make Your First API Calls
+GROQA provides a simple and powerfull interface for performing web searches.
+
+### 4.1 search / search_stream
+
+Synchronous:
+
+<CodeGroup>
+
+    ```bash python
+    result = client_sync.search(
+    query="What are the latest developments in AI?",
+    date_context="2024-08-25",
+    location="us",
+    pro_mode=False,
+    response_language="en",
+    answer_type="text",
+    verbose_mode=False,
+    search_type="general",
+    return_citations=False,
+    return_sources=False,
+    return_images=False,
+    recency_filter="anytime"
+    )
+
+    print(result)
+
+    # Streaming search
+    for chunk in client_sync.search_stream(
+    query="Explain quantum computing",
+    date_context="2024-08-25",
+    location="us",
+    pro_mode=False,
+    response_language="en",
+    answer_type="text",
+    verbose_mode=False,
+    search_type="general",
+    return_citations=False,
+    return_sources=False,
+    return_images=False,
+    recency_filter="anytime"
+    ):
+    print(chunk)
+    ```
+
+    ```bash curl
+    curl --request GET \
+    --url 'https://44c57909-d9e2-41cb-9244-9cd4a443cb41.app.bhs.ai.cloud.ovh.net' \
+    --header 'X-API-Key: api_key'
+    ```
+
+    ```bash javascript
+    // SEARCH
+    async function searchAPI() {
+    const baseUrl = 'https://44c57909-d9e2-41cb-9244-9cd4a443cb41.app.bhs.ai.cloud.ovh.net';
+    const apiKey = 'YOUR_API_KEY'; // Replace with your actual API key
+    const options ={
+    query:'Tom cruise',
+    date_context: '2024-09-09 7:00PM',
+    location: 'us',
+    pro_mode: false,
+    response_language: 'en',
+    answer_type: 'text',
+    search_type:"general",
+    verbose_mode:false,
+    return_sources:false,
+    return_images:false,
+    return_citations:false,
+    recency_filter:"anytime"
+
+}
+    const params = new URLSearchParams({
+    ...options
+});
+
+    try {
+    const response = await fetch(`${baseUrl}/search?${params}`, {
+    method: 'GET',
+    headers: {
+    'X-API-Key': apiKey,
+    'Content-Type': 'application/json'
+}
+});
+
+    if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+}
+
+    const data = await response.json();
+
+    console.log("Sources : ",data.sources); // if return sources true
+    console.log("IMAGES : ",data.images); // if return images true
+    console.log("LLM RESPONSE : ",data.llm_response);
+    console.log("Response Time : ",data.response_time);
+
+    return data;
+} catch (error) {
+    console.error('Error:', error);
+    throw error;
+}
+}
+
+    // SEARCH STREAM
+    async function searchStream() {
+
+    const baseUrl = 'https://44c57909-d9e2-41cb-9244-9cd4a443cb41.app.bhs.ai.cloud.ovh.net';
+    const endpoint = '/search_stream';
+
+    const params = new URLSearchParams({
+    query: "Tom cruise",
+    location:"us",
+    pro_mode: false,
+    response_language: "en",
+    answer_type: "text",
+    search_type:"general",
+    verbose_mode:false ,
+    return_sources:false,
+    return_images:false,
+    return_citations:false,
+    recency_filter:"anytime"
+});
+
+    const url = `${baseUrl}${endpoint}?${params}`;
+
+    try {
+    const response = await fetch(url, {
+    headers: {
+    'X-API-key': "YOUR_API_KEY"
+}
+});
+
+    if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+}
+
+    if (!response.body) {
+    throw new Error("ReadableStream not supported in this browser.");
+}
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+
+    let fullResponse = '';
+    let sources = [];
+    let images = [];
+
+    while (true) {
+    const { done, value } = await reader.read();
+
+    if (done) {
+    console.log('Stream complete');
+    break;
+}
+
+    const chunk = decoder.decode(value, { stream: true });
+    const lines = chunk.split('\n\n');
+
+    for (const line of lines) {
+    if (line.startsWith('data:')) {
+    const eventData = JSON.parse(line.slice(5));
+
+    switch (eventData.type) {
+    case 'sources':
+    sources = eventData.data;
+    console.log('Received sources:', sources);
+    break;
+    case 'images':
+    images = eventData.data;
+    console.log('Received images:', images);
+    break;
+    case 'llm':
+    fullResponse += eventData.text;
+    console.log('Received chunk:', eventData.text);
+    break;
+    case 'finished':
+    console.log('Stream finished');
+    break;
+    case 'error':
+    console.error('Error:', eventData.detail);
+    throw new Error(eventData.detail);
+}
+} else if (line.startsWith('event: end-of-stream')) {
+    console.log('End of stream reached');
+}
+}
+}
+
+    return { fullResponse, sources, images };
+} catch (error) {
+    console.error('Search failed:', error);
+    throw error;
+}
+}
+    ```
+
+</CodeGroup>
+
+Asynchronous:
+
+<CodeGroup>
+
+    ```bash python
+    import asyncio
+
+    async def search_async():
+    # Non-streaming search
+    result = await client_async.search(
+    query="What are the latest developments in AI?",
+    date_context="2024-08-25",
+    location="us",
+    pro_mode=False,
+    response_language="en",
+    answer_type="text",
+    verbose_mode=False,
+    search_type="general",
+    return_citations=False,
+    return_sources=False,
+    return_images=False,
+    recency_filter="anytime"
+    )
+    print(result)
+
+    # Streaming search
+    async for chunk in client_async.search_stream(
+    query="Explain quantum computing",
+    date_context="2024-08-25",
+    location="us",
+    pro_mode=False,
+    response_language="en",
+    answer_type="text",
+    verbose_mode=False,
+    search_type="general",
+    return_citations=False,
+    return_sources=False,
+    return_images=False,
+    recency_filter="anytime"
+    ):
+    print(chunk)
+
+    asyncio.run(search_async())
+    ```
+
+</CodeGroup>
+
+### 4.2. custom_search / custom_search_stream
+The custom search endpoints allow you to tailor both your system prompts and user prompts to fit your specific needs.
+
+Synchronous:
+
+<CodeGroup>
+
+    ```bash python
+    # Non-streaming custom search
+    result = client_sync.custom_search(
+    system_prompt="You are a helpful assistant.",
+    user_prompt="Explain the theory of relativity",
+    location="us",
+    pro_mode=False,
+    search_type="general",
+    return_images=False,
+    return_sources=False,
+    temperature=0.2,
+    top_p=0.9,
+    recency_filter="anytime"
+    )
+    print(result)
+
+    # Streaming custom search
+    for chunk in client_sync.custom_search_stream(
+    system_prompt="You are a helpful assistant.",
+    user_prompt="Explain the theory of relativity",
+    location="us",
+    pro_mode=False,
+    search_type="general",
+    return_images=False,
+    return_sources=False,
+    temperature=0.2,
+    top_p=0.9,
+    recency_filter="anytime"
+    ):
+    print(chunk)
+    ```
+
+    ```bash curl
+    curl --request GET \
+    --url 'https://44c57909-d9e2-41cb-9244-9cd4a443cb41.app.bhs.ai.cloud.ovh.net/custom_search?query=latest%20ai%20news' \
+    --header 'X-API-Key: api_key'
+    ```
+
+    ```bash javascript
+    // Custom Search
+    async function customSearchAPI() {
+    const baseUrl = 'https://44c57909-d9e2-41cb-9244-9cd4a443cb41.app.bhs.ai.cloud.ovh.net';
+    const apiKey = 'YOUR_API_KEY'; // Replace with your actual API key
+
+    const options ={
+    user_prompt:'Explain the theory of relativity',
+    system_prompt: 'You are a helpful assistant.',
+    location: 'fr',
+    pro_mode: false,
+    search_type:"general",
+    return_images:false,
+    return_sources:false,
+    recency_filter:"anytime",
+    temperature:0.2,
+    top_p:0.9
+}
+
+    const params = new URLSearchParams({
+    ...options
+});
+
+    try {
+    const response = await fetch(`${baseUrl}/custom_search?${params}`, {
+    method: 'GET',
+    headers: {
+    'X-API-Key': apiKey,
+    'Content-Type': 'application/json'
+}
+});
+
+    if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
+}
+
+    const data = await response.json();
+
+    console.log("LLM RESPONSE : ",data.llm_response);
+    console.log("Response Time : ",data.response_time);
+    return data;
+} catch (error) {
+    console.error('Error:', error.message);
+    throw error;
+}
+}
+
+    // CUSTOM SEARCH STREAM
+    async function searchCustomStream() {
+
+    const baseUrl = 'https://44c57909-d9e2-41cb-9244-9cd4a443cb41.app.bhs.ai.cloud.ovh.net'; // Replace with your actual API URL
+    const endpoint = '/custom_search_stream';
+
+    const params = new URLSearchParams({
+    user_prompt:'Explain the theory of relativity',
+    system_prompt: 'You are a helpful assistant.',
+    location: 'fr',
+    pro_mode: false,
+    search_type:"general",
+    return_images:false,
+    return_sources:false,
+    recency_filter:"anytime",
+    temperature:0.2,
+    top_p:0.9,
+});
+
+    const url = `${baseUrl}${endpoint}?${params}`;
+
+    try {
+    const response = await fetch(url, {
+    headers: {
+    'X-API-key': "YOUR_API_KEY"
+}
+});
+
+    if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+}
+
+    if (!response.body) {
+    throw new Error("ReadableStream not supported in this browser.");
+}
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+
+    let fullResponse = '';
+    let sources = [];
+    let images = [];
+
+    while (true) {
+    const { done, value } = await reader.read();
+
+    if (done) {
+    console.log('Stream complete');
+    break;
+}
+
+    const chunk = decoder.decode(value, { stream: true });
+    const lines = chunk.split('\n\n');
+
+    for (const line of lines) {
+    if (line.startsWith('data:')) {
+    const eventData = JSON.parse(line.slice(5));
+
+    switch (eventData.type) {
+    case 'sources':
+    sources = eventData.data;
+    console.log('Received sources:', sources);
+    break;
+    case 'images':
+    images = eventData.data;
+    console.log('Received images:', images);
+    break;
+    case 'llm':
+    fullResponse += eventData.text;
+    console.log('Received chunk:', eventData.text);
+    break;
+    case 'finished':
+    console.log('Stream finished');
+    break;
+    case 'error':
+    console.error('Error:', eventData.detail);
+    throw new Error(eventData.detail);
+}
+} else if (line.startsWith('event: end-of-stream')) {
+    console.log('End of stream reached');
+}
+}
+}
+
+    return { fullResponse, sources, images };
+} catch (error) {
+    console.error('Search failed:', error);
+    throw error;
+}
+}
+
+    ```
+
+</CodeGroup>
+
+
+### 4.3 Scrap TEXT from URL
+
+<CodeGroup>
+
+    ```bash python
+    #sync
+    result = client_sync.get_website_text("https://www.example.com")
+    print("TEXT : ",result.get("text"))
+
+
+    #async
+    result = await client_async.get_website_text("https://www.example.com")
+    print("TEXT : ",result.get("text"))
+    ```
+
+    ```bash curl
+    curl --request GET \
+    --url 'https://44c57909-d9e2-41cb-9244-9cd4a443cb41.app.bhs.ai.cloud.ovh.net/get_website_text?url=https%3A%2F%2Fexample.com%2F' \
+    --header 'X-API-Key: api_key'
+    ```
+
+    ```bash javascript
+    async function getWebsiteTextAPI() {
+    const baseUrl = 'https://44c57909-d9e2-41cb-9244-9cd4a443cb41.app.bhs.ai.cloud.ovh.net';
+    const apiKey = 'YOUR_API_KEY'; // Replace with your actual API key
+    const url = "https://example.com";
+    const params = new URLSearchParams({ url });
+
+    try {
+    const response = await fetch(`${baseUrl}/get_website_text?${params}`, {
+    method: 'GET',
+    headers: {
+    'X-API-Key': apiKey,
+    'Content-Type': 'application/json'
+}
+});
+
+    if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+}
+
+    const data = await response.json();
+
+    console.log("WEBSITE TEXT : ",data.text);
+    console.log("Response Time : ",data.response_time);
+
+    if (data.error) {
+    throw new Error(data.error);
+}
+
+    return data;
+} catch (error) {
+    console.error('Error:', error.message);
+    throw error;
+}
+}
+    ```
+
+</CodeGroup>
+
+### 4.4 Retrieve text in markdown format from an URL
+
+<CodeGroup>
+
+    ```bash python
+    #sync
+    result = client_sync.get_website_markdown("https://www.example.com")
+    print(result.markdown)
+
+    #async
+    result = await client_async.get_website_markdown("https://www.example.com")
+    print(result.markdown)
+    ```
+
+    ```bash curl
+    curl --request GET \
+    --url 'https://44c57909-d9e2-41cb-9244-9cd4a443cb41.app.bhs.ai.cloud.ovh.net/get_website_markdown?url=https%3A%2F%2Fexample.com%2F' \
+    --header 'X-API-Key: api_key'
+    ```
+
+    ```bash javascript
+    async function getWebsiteMarkdownAPI() {
+    const baseUrl = 'https://44c57909-d9e2-41cb-9244-9cd4a443cb41.app.bhs.ai.cloud.ovh.net';
+    const url = "https://example.com";
+    const params = new URLSearchParams({ url });
+    const apiKey = "YOUR_API_KEY"
+
+    try {
+    const response = await fetch(`${baseUrl}/get_website_markdown?${params}`, {
+    method: 'GET',
+    headers: {
+    'Content-Type': 'application/json',
+    'X-API-Key': apiKey
+}
+});
+
+    if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+}
+
+    const data = await response.json();
+
+    console.log("Markdown Result : ",data.markdown);
+    console.log("Response Time : ",data.response_time);
+
+    if (data.error) {
+    throw new Error(data.error);
+}
+
+    return data;
+} catch (error) {
+    console.error('Error:', error.message);
+    throw error;
+}
+}
+    ```
+
+</CodeGroup>
+
+
+### 4.5 Get a screenshot of an URL
+
+<CodeGroup>
+
+    ```bash python
+    #sync
+    result = client_sync.get_website_screenshot("https://www.example.com")
+    print(f"Screenshot available at: {result['url']}")
+
+    #async
+    result = await client_async.get_website_screenshot("https://www.example.com")
+    print(f"Screenshot available at: {result['url']}")
+    ```
+
+    ```bash curl
+    curl --request GET \
+    --url 'https://44c57909-d9e2-41cb-9244-9cd4a443cb41.app.bhs.ai.cloud.ovh.net/get_website_screenshot?url=https%3A%2F%2Fexample.com%2F' \
+    --header 'X-API-Key: api_key'
+    ```
+
+    ```bash javascript
+    async function getWebsiteScreenshotAPI() {
+    const baseUrl = 'https://44c57909-d9e2-41cb-9244-9cd4a443cb41.app.bhs.ai.cloud.ovh.net';
+    const url = "https://example.com";
+    const params = new URLSearchParams({ url });
+    const apiKey = 'YOUR_API_KEY'; // Replace with your actual API key
+
+    try {
+    const response = await fetch(`${baseUrl}/get_website_screenshot?${params}`, {
+    method: 'GET',
+    headers: {
+    'Content-Type': 'application/json',
+    'X-API-Key': apiKey
+}
+});
+
+    if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+}
+
+    const data = await response.json();
+
+    console.log("Screenshot Result : ",data.url);
+    console.log("Response Time : ",data.response_time);
+
+    if (data.error) {
+    throw new Error(data.error);
+}
+
+    return data;
+} catch (error) {
+    console.error('Error:', error.message);
+    throw error;
+}
+}
+    ```
+
+</CodeGroup>
+
+### 4.5 URL-based Querying
+
+<CodeGroup>
+
+    ```bash python
+    #sync
+    response = client_sync.query_from_url(
+    url="https://www.example.com/article",
+    query="What is the main topic of this article?",
+    response_language="it",
+    answer_type="text", # default is "text" if not specified
+
+    )
+    print(response)
+
+    #async
+    response = await client_async.query_from_url(
+    url="https://www.example.com/article",
+    query="What is the main topic of this article?",
+    response_language="it",
+    answer_type="text" # default is "text" if not specified
+    )
+    print(response)
+    ```
+
+    ```bash curl
+    curl --request GET \
+    --url 'https://44c57909-d9e2-41cb-9244-9cd4a443cb41.app.bhs.ai.cloud.ovh.net/query_from_url?url=https%3A%2F%2Fexample.com%2F&query=explain%20this%20article' \
+    --header 'X-API-Key: api_key'
+    ```
+
+    ```bash javascript
+    async function queryFromUrlAPI(url, query, options = {}) {
+    const baseUrl = 'https://44c57909-d9e2-41cb-9244-9cd4a443cb41.app.bhs.ai.cloud.ovh.net';
+
+    const apiKey = 'YOUR_API_KEY_HERE'; // Replace with your actual API key
+
+    const params = new URLSearchParams({
+    url,
+    query,
+    response_language: options.responseLanguage || 'auto',
+    answer_type: options.answerType || 'text'
+});
+
+
+    try {
+    const response = await fetch(`${baseUrl}/query_from_url?${params}`, {
+    method: 'GET',
+    headers: {
+    'Content-Type': 'application/json',
+    'X-API-Key': apiKey
+}
+});
+
+    if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+}
+
+    const data = await response.json();
+
+    if (data.error) {
+    throw new Error(data.error);
+}
+
+    return data;
+} catch (error) {
+    console.error('Error:', error.message);
+    throw error;
+}
+}
+
+    //example
+    const websiteUrl = 'https://example.com';
+    const userQuery = 'What is the main topic of this page?';
+    const options = {
+    response_language: 'en',
+    answer_type: 'text'
+};
+
+    queryFromUrlAPI(websiteUrl, userQuery, options)
+    .then(result => {
+    console.log('LLM Response:', result.llm_response);
+    console.log('Response time:', result.response_time);
+    // Handle the LLM response here, e.g., display it to the user
+})
+    .catch(error => {
+    console.error('Error:', error.message);
+    // Handle any errors here
+});
+    ```
+
+</CodeGroup>
+
+
+
+
+
+
+
+

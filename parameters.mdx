@@ -1,0 +1,352 @@
+---
+title: 'Parameters'
+description: 'A comprehensive guide for  using Openperplex API parameters effectively'
+---
+
+# Openperplex API Parameters Guide
+
+This guide will help you understand and utilize the various parameters available in the Openperplex API to customize your search queries and responses.
+
+## Parameters for `search` and `search_stream` methods
+
+<ParamField query="query" type="string" required>
+    The search query or question you want to ask. This is the primary input for your search.
+    Be as specific as possible in your query.
+</ParamField>
+
+<ParamField query="date_context" type="string">
+    Optional date for context. 
+    
+    Format example: `Today is Monday 16 of September 2024 and the time is 6:36 PM`.
+
+    If not provided, the API uses the current date of the server.
+
+</ParamField>
+
+<ParamField query="location" type="string" default="us">
+    Country code for search context. This helps in providing localized results.
+    See the supported locations below.
+</ParamField>
+
+<ParamField query="pro_mode" type="boolean" default="False">
+    Enable or disable pro mode for more advanced search capabilities.
+</ParamField>
+
+<ParamField query="response_language" type="string" default="auto">
+    Language code for the response. "auto" will auto-detect based on the query. see the supported languages below.
+</ParamField>
+
+<ParamField query="answer_type" type="string" default="text">
+    Format of the answer. Options: "text", "markdown", or "html".
+</ParamField>
+
+<ParamField query="search_type" type="string" default="general">
+    Type of the search : `general` or `news`
+</ParamField>
+
+<ParamField query="verbose_mode" type="boolean" default="False">
+    Set the `verbose_mode` parameter to `True` get more detailed information in the response.
+</ParamField>
+
+<ParamField query="return_citations" type="boolean" default="False">
+    Include citations in the response
+</ParamField>
+
+<ParamField query="return_sources" type="boolean" default="False">
+    Return Sources
+</ParamField>
+
+<ParamField query="return_images" type="boolean" default="False">
+    Return Images if provided in the response (Depends on the search query and the google API)
+</ParamField>
+
+<ParamField query="recency_filter" type="string" default="anytime">
+    Can be `hour`, `day`, `week`, `month`, `year`, `anytime`. Impact the search results recency.
+</ParamField>
+
+
+
+## Parameters for `custom_search` and `custom_search_stream` methods
+
+<ParamField query="system_prompt" type="string" required>
+    System prompt : The system prompt is the prompt that will be used to generate the response.
+</ParamField>
+
+<ParamField query="user_prompt" type="string" required>
+    User prompt : The user prompt is the prompt that will be used to perform the web search. be as specific as possible and let the system prompt handle the details of the response.
+</ParamField>
+
+<ParamField query="location" type="string" default="us">
+    Country code for search context. This helps in providing localized results.
+</ParamField>
+
+<ParamField query="pro_mode" type="boolean" default="false">
+    Enable or disable pro mode for more advanced search capabilities.
+</ParamField>
+
+<ParamField query="search_type" type="string" default="general">
+    Type of the search : `general` or `news`
+</ParamField>
+
+
+<ParamField query="temperature" type="number" default="0.2">
+    The amount of randomness in the response, valued between 0 inclusive and 1 exclusive. Higher values are more random, and lower values are more deterministic.
+</ParamField>
+
+<ParamField query="top_p" type="number" default="0.9">
+  The nucleus sampling threshold, valued between 0 and 1 inclusive. For each subsequent token, the model considers the results of the tokens with top_p probability mass. We recommend either altering top_k or top_p, but not both.
+</ParamField>
+
+<ParamField query="return_sources" type="boolean" default="false">
+    Return Sources
+</ParamField>
+
+<ParamField query="return_images" type="boolean" default="false">
+    Return Images
+</ParamField>
+
+<ParamField query="recency_filter" type="string" default="anytime">
+    Can be `hour`, `day`, `week`, `month`, `year`, `anytime`. Impact the search results recency.
+</ParamField>
+
+
+
+
+## Parameters for `get_website_text` , `get_website_screenshot`, `get_website_markdown` methods
+
+<ParamField query="url" type="string" required>
+    The URL of the website you want to scrap or get a screenshot from it.
+</ParamField>
+
+
+## Parameters for `query_from_url`  method
+
+<ParamField query="url" type="string" required>
+    The URL of the website you want to interact with.
+</ParamField>
+
+<ParamField query="query" type="string" required>
+       The question you want to ask. 
+</ParamField>
+
+<ParamField query="response_language" type="string" default="auto">
+    Language code for the response. "auto" will auto-detect based on the query.
+</ParamField>
+
+<ParamField query="answer_type" type="string" default="text">
+    Format of the answer. Options: "text", "markdown", or "html".
+</ParamField>
+
+
+## Supported Locations
+
+The `location` parameter accepts various country codes to provide localized search results. Here's a comprehensive list of supported locations:
+
+<CardGroup cols={4}>
+    <Card title="🇺🇸 us" body="United States" />
+    <Card title="🇨🇦 ca" body="Canada" />
+    <Card title="🇬🇧 uk" body="United Kingdom" />
+    <Card title="🇲🇽 mx" body="Mexico" />
+    <Card title="🇪🇸 es" body="Spain" />
+    <Card title="🇩🇪 de" body="Germany" />
+    <Card title="🇫🇷 fr" body="France" />
+    <Card title="🇵🇹 pt" body="Portugal" />
+    <Card title="🇧🇪 be" body="Belgium" />
+    <Card title="🇳🇱 nl" body="Netherlands" />
+    <Card title="🇨🇭 ch" body="Switzerland" />
+    <Card title="🇳🇴 no" body="Norway" />
+    <Card title="🇸🇪 se" body="Sweden" />
+    <Card title="🇦🇹 at" body="Austria" />
+    <Card title="🇩🇰 dk" body="Denmark" />
+    <Card title="🇫🇮 fi" body="Finland" />
+    <Card title="🇹🇷 tr" body="Turkey" />
+    <Card title="🇮🇹 it" body="Italy" />
+    <Card title="🇵🇱 pl" body="Poland" />
+    <Card title="🇷🇺 ru" body="Russia" />
+    <Card title="🇿🇦 za" body="South Africa" />
+    <Card title="🇦🇪 ae" body="United Arab Emirates" />
+    <Card title="🇸🇦 sa" body="Saudi Arabia" />
+    <Card title="🇦🇷 ar" body="Argentina" />
+    <Card title="🇧🇷 br" body="Brazil" />
+    <Card title="🇦🇺 au" body="Australia" />
+    <Card title="🇨🇳 cn" body="China" />
+    <Card title="🇰🇷 kr" body="Korea" />
+    <Card title="🇯🇵 jp" body="Japan" />
+    <Card title="🇮🇳 in" body="India" />
+    <Card title="🇵🇸 ps" body="Palestine" />
+    <Card title="🇰🇼 kw" body="Kuwait" />
+    <Card title="🇴🇲 om" body="Oman" />
+    <Card title="🇶🇦 qa" body="Qatar" />
+    <Card title="🇮🇱 il" body="Israel" />
+    <Card title="🇲🇦 ma" body="Morocco" />
+    <Card title="🇪🇬 eg" body="Egypt" />
+    <Card title="🇮🇷 ir" body="Iran" />
+    <Card title="🇱🇾 ly" body="Libya" />
+    <Card title="🇾🇪 ye" body="Yemen" />
+    <Card title="🇮🇩 id" body="Indonesia" />
+    <Card title="🇵🇰 pk" body="Pakistan" />
+    <Card title="🇧🇩 bd" body="Bangladesh" />
+    <Card title="🇲🇾 my" body="Malaysia" />
+    <Card title="🇵🇭 ph" body="Philippines" />
+    <Card title="🇹🇭 th" body="Thailand" />
+    <Card title="🇻🇳 vn" body="Vietnam" />
+</CardGroup>
+
+<Tip>
+    Use the appropriate country code to get results relevant to a specific region. For example, use "jp" for Japan-specific results or "br" for Brazil-focused searches.
+</Tip>
+
+## Supported Languages
+
+The `response_language` parameter allows you to specify the language of the API response:
+
+`auto` : auto detect user question language
+
+<CardGroup cols={3}>
+    <Card title="auto" body="Auto-detect (default)" />
+    <Card title="en" body="English" />
+    <Card title="fr" body="French" />
+    <Card title="es" body="Spanish" />
+    <Card title="de" body="German" />
+    <Card title="it" body="Italian" />
+    <Card title="pt" body="Portuguese" />
+    <Card title="nl" body="Dutch" />
+    <Card title="ja" body="Japanese" />
+    <Card title="ko" body="Korean" />
+    <Card title="zh" body="Chinese" />
+    <Card title="ar" body="Arabic" />
+    <Card title="ru" body="Russian" />
+    <Card title="tr" body="Turkish" />
+    <Card title="hi" body="Hindi" />
+</CardGroup>
+
+# Response Structure
+
+Depending on the method you use, the response structure will vary:
+
+### `search` and `custom_search` method
+
+<ResponseField name="llm_response" type="string">
+    The main response from the language model.
+</ResponseField>
+
+<ResponseField name="images" type="array">
+    A list of relevant images (if available).
+    set `return_images` to `True` to include images in the result
+</ResponseField>
+
+<ResponseField name="sources" type="array">
+    A list of sources used to generate the response.
+    set return_sources to `True` to include sources in the result
+</ResponseField>
+
+
+<ResponseField name="response_time" type="string">
+   The response time.
+</ResponseField>
+
+
+### `search_stream` and `custom_search_stream` method
+
+The streaming response is divided into chunks, each with a `type` field:
+
+<ResponseField name="llm" type="type">
+    <Expandable title="Properties">
+        <ResponseField name="text" type="string">
+            A part of the language model's response.
+        </ResponseField>
+    </Expandable>
+</ResponseField>
+
+<ResponseField name="sources" type="type">
+    <Expandable title="Properties">
+        <ResponseField name="data" type="array">
+            A list of sources.
+        </ResponseField>
+    </Expandable>
+</ResponseField>
+
+<ResponseField name="images" type="type">
+    <Expandable title="Properties">
+        <ResponseField name="data" type="array">
+            A list of images.
+        </ResponseField>
+    </Expandable>
+</ResponseField>
+
+
+### `get_website_screenshot` method
+
+<ResponseField name="url" type="string">
+    The URL where the screenshot can be accessed.
+</ResponseField>
+
+<ResponseField name="response_time" type="string">
+    The response time.
+</ResponseField>
+
+### `get_website_text` method
+
+<ResponseField name="text" type="string">
+    The TEXT extracted from URL
+</ResponseField>
+
+<ResponseField name="response_time" type="string">
+    The response time.
+</ResponseField>
+
+### `get_website_markdown` method
+
+<ResponseField name="markdown" type="string">
+    The TEXT in MARKDOWN format extracted from URL
+</ResponseField>
+
+<ResponseField name="response_time" type="string">
+    The response time.
+</ResponseField>
+
+### `query_from_url` method
+
+<ResponseField name="llm_response" type="string">
+    The LLM response
+</ResponseField>
+
+<ResponseField name="response_time" type="string">
+    The response time.
+</ResponseField>
+
+# Best Practices
+
+<AccordionGroup>
+    <Accordion title="Use Specific Queries">
+        Be as specific as possible in your `query` parameter to get more accurate results.
+    </Accordion>
+
+    <Accordion title="Custom Search advice">
+        Use the custom_search or custom_search_stream to write your own system and user prompts for more specific queries.
+        always be specific with the user prompt since it will be used for the web search.
+        Remember to include date context if needed in your system prompt.
+        if you need citations, you must add the citation prompt in the System prompt.
+    </Accordion>
+
+
+
+    <Accordion title="Leverage Date Context">
+        Use the `date_context` parameter when searching for time-sensitive information. 
+
+        Use this format : `today is 8 of october and the time is 6 PM`
+    </Accordion>
+    <Accordion title="Optimize for Locale">
+        Combine `location` and `response_language` parameters for the most relevant local results.
+    </Accordion>
+    <Accordion title="Choose the Right Answer Type">
+        Select the appropriate `answer_type` based on how you plan to display the results in your application.
+    </Accordion>
+    <Accordion title="Write a good user prompt">
+        in the `custom_search` and `custom_search_stream` methods, be as specific as possible, let the `system_prompt`handle the details of the response.
+
+        be aware that the `user_prompt` will be used to perform the web search.
+    </Accordion>
+</AccordionGroup>
+
+By understanding and effectively using these parameters, you can maximize the power of the Openperplex API in your applications. Happy coding!
