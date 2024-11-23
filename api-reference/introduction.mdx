@@ -1,33 +1,60 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: 'Overview'
+description: 'Empower your applications with advanced web search and content retrieval'
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+## Welcome to Openperplex API
 
-## Welcome
+Openperplex API provides powerful, global search capabilities and web content analysis for AI applications. Our API allows developers to integrate cutting-edge search functionalities, multilingual support, and content retrieval features into their projects.
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+## Key Features
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
+<CardGroup cols={2}>
+  <Card title="High-Accuracy Search" icon="magnifying-glass">
+    Advanced algorithms ensure the most relevant results for your queries.
+  </Card>
+  <Card title="Multilingual Support" icon="language">
+    Support for 14 languages, enabling truly global applications.
+  </Card>
+  <Card title="Content Streaming" icon="stream">
+    Get real-time data streams for up-to-the-minute information.
+  </Card>
+  <Card title="40+ Search Locations" icon="globe">
+    Access localized information from around the world.
+  </Card>
+</CardGroup>
+
+## API Endpoints
+
+Our API offers a range of endpoints to suit various needs:
+
+<Card title="Openperplex API Endpoints" icon="code" href="/api-reference/endpoint/search_stream">
+  Explore our comprehensive list of API endpoints
 </Card>
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+All API endpoints are authenticated using an API key. You'll need to include your API key in the headers of your requests:
 
 ```json
-"security": [
-  {
-    "bearerAuth": []
+{
+  "headers": {
+    "X-API-Key": "YOUR_API_KEY"
   }
-]
+}
 ```
+
+<Note>
+  Remember to keep your API key secure and never share it publicly. You can manage your API keys in the [Openperplex API Platform](https://api.openperplex.com).
+</Note>
+
+## Getting Started
+
+To start using the Openperplex API:
+
+1. Sign up for an account on our [API Platform](https://api.openperplex.com).
+2. Obtain your API key from the dashboard.
+3. Explore our API endpoints and integrate them into your application.
+4. Refer to our [Quickstart Guide](/quickstart) for detailed setup instructions.
+
+We're excited to see what you'll build with Openperplex API! If you have any questions or need assistance, don't hesitate to reach out to our support team.

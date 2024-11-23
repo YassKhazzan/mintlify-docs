@@ -1,194 +1,590 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.0.0",
   "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
-    "license": {
-      "name": "MIT"
-    },
-    "version": "1.0.0"
+    "title": "Openperplex API",
+    "version": "0.2.0",
+    "description": "API for Openperplex, providing enhanced search and website content retrieval capabilities."
   },
   "servers": [
     {
-      "url": "http://sandbox.mintlify.com"
-    }
-  ],
-  "security": [
-    {
-      "bearerAuth": []
+      "url": "https://44c57909-d9e2-41cb-9244-9cd4a443cb41.app.bhs.ai.cloud.ovh.net"
     }
   ],
   "paths": {
-    "/plants": {
+    "/search_stream": {
       "get": {
-        "description": "Returns all plants from the system that the user has access to",
+        "summary": "Stream search results",
+        "operationId": "searchStream",
         "parameters": [
           {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
+            "$ref": "#/components/parameters/query"
+          },
+          {
+            "$ref": "#/components/parameters/dateContext"
+          },
+          {
+            "$ref": "#/components/parameters/location"
+          },
+          {
+            "$ref": "#/components/parameters/proMode"
+          },
+          {
+            "$ref": "#/components/parameters/responseLanguage"
+          },
+          {
+            "$ref": "#/components/parameters/answerType"
+          },
+          {
+            "$ref": "#/components/parameters/searchType"
+          },
+          {
+            "$ref": "#/components/parameters/verboseMode"
+          },
+          {
+            "$ref": "#/components/parameters/returnCitations"
+          },
+          {
+            "$ref": "#/components/parameters/returnSources"
+          },
+          {
+            "$ref": "#/components/parameters/returnImages"
           }
         ],
         "responses": {
           "200": {
-            "description": "Plant response",
+            "description": "Successful response",
             "content": {
-              "application/json": {
+              "text/event-stream": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
-                  }
+                  "type": "string"
                 }
               }
             }
           },
-          "400": {
-            "description": "Unexpected error",
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/search": {
+      "get": {
+        "summary": "Perform a search",
+        "operationId": "search",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/query"
+          },
+          {
+            "$ref": "#/components/parameters/dateContext"
+          },
+          {
+            "$ref": "#/components/parameters/location"
+          },
+          {
+            "$ref": "#/components/parameters/proMode"
+          },
+          {
+            "$ref": "#/components/parameters/responseLanguage"
+          },
+          {
+            "$ref": "#/components/parameters/answerType"
+          },
+          {
+            "$ref": "#/components/parameters/searchType"
+          },
+          {
+            "$ref": "#/components/parameters/verboseMode"
+          },
+          {
+            "$ref": "#/components/parameters/returnCitations"
+          },
+          {
+            "$ref": "#/components/parameters/returnSources"
+          },
+          {
+            "$ref": "#/components/parameters/returnImages"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/SimplifiedSearchResponse"
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           }
-        }
-      },
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/custom_search_stream": {
       "post": {
-        "description": "Creates a new plant in the store",
+        "summary": "Stream custom search results",
+        "operationId": "customSearchStream",
         "requestBody": {
-          "description": "Plant to add to the store",
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPlant"
+                "$ref": "#/components/schemas/SearchCustomStreamRequest"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
-            "description": "plant response",
+            "description": "Successful response",
             "content": {
-              "application/json": {
+              "text/event-stream": {
                 "schema": {
-                  "$ref": "#/components/schemas/Plant"
+                  "type": "string"
                 }
               }
             }
           },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/custom_search": {
+      "post": {
+        "summary": "Perform a custom search",
+        "operationId": "customSearch",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchCustomStreamRequest"
               }
             }
           }
-        }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimplifiedSearchResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
       }
     },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
+    "/get_website_text": {
+      "get": {
+        "summary": "Get website text content",
+        "operationId": "getWebsiteText",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "description": "ID of plant to delete",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "$ref": "#/components/parameters/url"
           }
         ],
         "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
-          },
-          "400": {
-            "description": "unexpected error",
+          "200": {
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/GetWebsiteTextResult"
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/get_website_screenshot": {
+      "get": {
+        "summary": "Get website screenshot",
+        "operationId": "getWebsiteScreenshot",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/url"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetWebsiteScreenShotResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/get_website_markdown": {
+      "get": {
+        "summary": "Get website content in markdown format",
+        "operationId": "getWebsiteMarkdown",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/url"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetWebsiteMarkdownResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/query_from_url": {
+      "get": {
+        "summary": "Query content from a specific URL",
+        "operationId": "queryFromUrl",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/url"
+          },
+          {
+            "$ref": "#/components/parameters/query"
+          },
+          {
+            "$ref": "#/components/parameters/responseLanguage"
+          },
+          {
+            "$ref": "#/components/parameters/answerType"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetQueryFromURLResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
       }
     }
   },
   "components": {
+    "parameters": {
+      "query": {
+        "name": "query",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "dateContext": {
+        "name": "date_context",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "location": {
+        "name": "location",
+        "in": "query",
+        "schema": {
+          "type": "string",
+          "default": "us"
+        }
+      },
+      "proMode": {
+        "name": "pro_mode",
+        "in": "query",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "responseLanguage": {
+        "name": "response_language",
+        "in": "query",
+        "schema": {
+          "type": "string",
+          "default": "auto"
+        }
+      },
+      "answerType": {
+        "name": "answer_type",
+        "in": "query",
+        "schema": {
+          "type": "string",
+          "default": "text"
+        }
+      },
+      "searchType": {
+        "name": "search_type",
+        "in": "query",
+        "schema": {
+          "type": "string",
+          "default": "general"
+        }
+      },
+      "verboseMode": {
+        "name": "verbose_mode",
+        "in": "query",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "returnCitations": {
+        "name": "return_citations",
+        "in": "query",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "returnSources": {
+        "name": "return_sources",
+        "in": "query",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "returnImages": {
+        "name": "return_images",
+        "in": "query",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "url": {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
     "schemas": {
-      "Plant": {
-        "required": [
-          "name"
-        ],
+      "SimplifiedSearchResponse": {
         "type": "object",
         "properties": {
-          "name": {
-            "description": "The name of the plant",
+          "llm_response": {
             "type": "string"
           },
-          "tag": {
-            "description": "Tag to specify the type",
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "response_time": {
+            "type": "number"
+          },
+          "error": {
             "type": "string"
           }
         }
       },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
-          },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          }
-        ]
-      },
-      "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
+      "SearchCustomStreamRequest": {
         "type": "object",
         "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
+          "system_prompt": {
             "type": "string"
+          },
+          "user_prompt": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string",
+            "default": "us"
+          },
+          "pro_mode": {
+            "type": "boolean",
+            "default": false
+          },
+          "search_type": {
+            "type": "string",
+            "default": "general"
+          },
+          "return_images": {
+            "type": "boolean",
+            "default": false
+          },
+          "return_sources": {
+            "type": "boolean",
+            "default": false
+          },
+          "temperature": {
+            "type": "number",
+            "default": 0.2
+          },
+          "top_p": {
+            "type": "number",
+            "default": 0.9
+          }
+        }
+      },
+      "GetWebsiteTextResult": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "response_time": {
+            "type": "number"
+          }
+        }
+      },
+      "GetWebsiteScreenShotResult": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "response_time": {
+            "type": "number"
+          }
+        }
+      },
+      "GetWebsiteMarkdownResult": {
+        "type": "object",
+        "properties": {
+          "markdown": {
+            "type": "string"
+          },
+          "response_time": {
+            "type": "number"
+          }
+        }
+      },
+      "GetQueryFromURLResult": {
+        "type": "object",
+        "properties": {
+          "llm_response": {
+            "type": "string"
+          },
+          "response_time": {
+            "type": "number"
           }
         }
       }
     },
+    "responses": {
+      "UnauthorizedError": {
+        "description": "Invalid API Key"
+      },
+      "InternalServerError": {
+        "description": "Unexpected error"
+      }
+    },
     "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
       }
     }
   }

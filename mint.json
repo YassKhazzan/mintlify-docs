@@ -49,34 +49,28 @@
       ]
     },
     {
-      "group": "Essentials",
-      "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
-      ]
-    },
-    {
       "group": "API Documentation",
       "pages": [
         "api-reference/introduction"
       ]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "Endpoint",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "api-reference/endpoint/get-website-screenshot",
+        "api-reference/endpoint/get-website-markdown",
+        "api-reference/endpoint/get-website-text",
+        "api-reference/endpoint/query-from-url",
+        "api-reference/endpoint/search",
+        "api-reference/endpoint/custom-search",
+        "api-reference/endpoint/search-stream",
+        "api-reference/endpoint/custom-search-stream"
       ]
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://linkedin.com/company/mintlify"
+    "x": "https://x.com/groqa",
+    "github": "https://github.com/groqa",
+    "linkedin": "https://linkedin.com/company/groqa"
   }
 }
