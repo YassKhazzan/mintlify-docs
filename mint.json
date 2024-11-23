@@ -2,10 +2,10 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "GROQA API Documentation",
   "logo": {
-    "dark": "/images/groqa.png",
-    "light": "/images/groqa.png"
+    "dark": "/images/2.png",
+    "light": "/images/1.png"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/fav.png",
   "colors": {
     "primary": "#5743b2",
     "light": "#5743b2",
